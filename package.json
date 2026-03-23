@@ -1,0 +1,16 @@
+{
+  "name": "jwt_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "project": "concurrently \" cd server && npm run nodemon \" \" cd client && npm run start \""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

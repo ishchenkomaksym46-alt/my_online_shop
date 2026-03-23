@@ -1,0 +1,9 @@
+node_modules/
+client/node_modules/
+client/build/
+client/.env
+server/node_modules/
+server/.env
+.client-git-backup/
+.env
+build
