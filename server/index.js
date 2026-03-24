@@ -11,6 +11,9 @@ import { moreInfoController } from './controlers/moreInfoController.js';
 import { getCartController } from './controlers/getCartController.js';
 import { addToCartController } from './controlers/addToCartController.js';
 import { removeFromCartController } from './controlers/removeFromCartController.js';
+import { orderOneController } from './controlers/orderOneController.js';
+import { orderCartController } from './controlers/orderCartController.js';
+import { getOrderController } from './controlers/getOrdersController.js';
 
 const app = express();
 
@@ -32,5 +35,8 @@ app.get('/moreInfo/:id', moreInfoController);
 app.get('/cart', auth, getCartController);
 app.post('/cart', auth, addToCartController);
 app.delete('/cart/:id', auth, removeFromCartController);
+app.post('/order/cart', auth, orderCartController);
+app.get('/order/:id', auth, orderOneController);
+app.get('/getOrders', auth, getOrderController);
 
 app.listen(process.env.PORT, () => console.log('Server started!'));

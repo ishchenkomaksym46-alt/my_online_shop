@@ -86,6 +86,7 @@ function MainPage() {
             <a href="/addProduct">Add product</a>
             <a href="/deleteProduct">Delete Product</a>
             <a href="/cart">Cart</a>
+            <a href="/getOrders">Check my orders</a>
             {error && <p>{error}</p>}
             {products.map(el => (
                 <div key={el.id}>
@@ -93,7 +94,7 @@ function MainPage() {
                     <h2>{el.name}</h2>
                     <h3>Price: {el.price}</h3>
                     <button onClick={() => addToCart(el)}>Add to cart</button>
-                    <button>Buy right now</button>
+                    <button onClick={() => navigate(`/pay/${el.id}`)}>Buy right now</button>
                     <button onClick={() => navigate(`/moreInfo/${el.id}`)}>More information</button>
                 </div>
             ))}

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function Cart() {
     const [cartItems, setCartItems] = useState([]);
     const [error, setError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -93,6 +94,46 @@ function Cart() {
         sum + item.product_price * item.quantity
     ), 0);
 
+    const buyCart = async () => {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
+        try {
+            setIsSubmitting(true);
+
+            const res = await fetch('http://localhost:5000/order/cart', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                if (res.status === 401) {
+                    localStorage.removeItem('token');
+                    navigate('/login');
+                    return;
+                }
+
+                setError(data.message || 'Cannot complete cart order.');
+                return;
+            }
+
+            setCartItems([]);
+            setError('');
+        } catch (fetchError) {
+            setError('Cannot complete cart order.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <div>
             <button onClick={() => navigate('/')}>Back to products</button>
@@ -112,7 +153,9 @@ function Cart() {
                         </div>
                     ))}
                     <h3>Total price: {totalPrice}</h3>
-                    <button>Buy</button>
+                    <button onClick={buyCart} disabled={isSubmitting}>
+                        {isSubmitting ? 'Processing...' : 'Buy'}
+                    </button>
                 </>
             )}
         </div>

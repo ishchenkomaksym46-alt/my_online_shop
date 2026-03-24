@@ -7,6 +7,9 @@ import AddProduct from './addProduct/addProduct.jsx';
 import DeleteProduct from './deleteProduct/deleteProduct.jsx';
 import MoreInfo from './moreInfo/moreInfo.jsx';
 import Cart from './cart/cart.jsx';
+import Pay from './cart/pay.jsx';
+import CheckOrders from './checkOrders/checkOrders.jsx';
+import './styles/style.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -20,6 +23,8 @@ root.render(
       <Route path='/deleteProduct' element={<DeleteProduct />} />
       <Route path='/moreInfo/:id' element={<MoreInfo />} />
       <Route path='/cart' element={<Cart />} />
+      <Route path='/pay/:id' element={<Pay />} />
+      <Route path='/getOrders' element={<CheckOrders />} />
     </Routes>
   </BrowserRouter>
 );
