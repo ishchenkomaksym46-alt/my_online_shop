@@ -135,27 +135,37 @@ function Cart() {
     };
 
     return (
-        <div>
-            <button onClick={() => navigate('/')}>Back to products</button>
-            <h1>Cart</h1>
-            {error && <p>{error}</p>}
+        <div className="pageShell">
+            <div className="pageHeader">
+                <button className="secondaryButton" onClick={() => navigate('/')}>Back to products</button>
+                <h1 className="sectionTitle">Cart</h1>
+            </div>
+            {error && <p className="statusMessage">{error}</p>}
             {cartItems.length === 0 ? (
-                <p>Your cart is empty.</p>
+                <div className="emptyState">
+                    <p>Your cart is empty.</p>
+                </div>
             ) : (
                 <>
-                    {cartItems.map(item => (
-                        <div key={item.id}>
+                    <div className="cardsGrid">
+                        {cartItems.map(item => (
+                        <div key={item.id} className="infoCard">
                             <h2>{item.product_name}</h2>
                             <p>{item.product_description}</p>
-                            <p>Price: {item.product_price}</p>
-                            <p>Quantity: {item.quantity}</p>
-                            <button onClick={() => removeFromCart(item.id)}>Remove from cart</button>
+                            <p className="infoMeta">Price: {item.product_price}</p>
+                            <p className="infoMeta">Quantity: {item.quantity}</p>
+                            <div className="cardActions">
+                                <button onClick={() => removeFromCart(item.id)}>Remove from cart</button>
+                            </div>
                         </div>
                     ))}
-                    <h3>Total price: {totalPrice}</h3>
-                    <button onClick={buyCart} disabled={isSubmitting}>
-                        {isSubmitting ? 'Processing...' : 'Buy'}
-                    </button>
+                    </div>
+                    <div className="summaryCard">
+                        <h3>Total price: {totalPrice}</h3>
+                        <button onClick={buyCart} disabled={isSubmitting}>
+                            {isSubmitting ? 'Processing...' : 'Buy'}
+                        </button>
+                    </div>
                 </>
             )}
         </div>

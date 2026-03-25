@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function MoreInfo() {
     const [productInfo, setProductInfo] = useState([]);
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getProductData = async () => {
@@ -19,16 +20,39 @@ function MoreInfo() {
     }, [id])
     
     return(
-        <div>
-            {productInfo.map(el => (
-                <div key={el.id}>
-                    <img src={el.img} alt="product" width={350}/>
-                    <h2>Product name: {el.name}</h2>
-                    <h3>Product description: {el.description}</h3>
-                    <h4>Price {el.price}</h4>
-                    <h5>Product image url: {el.img}</h5>
+        <div className="pageShell">
+            <div className="pageHeader">
+                <button className="secondaryButton" onClick={() => navigate(-1)}>Back</button>
+                <h1 className="sectionTitle">Product details</h1>
+            </div>
+            {productInfo.length === 0 ? (
+                <div className="emptyState">
+                    <p>Loading product information...</p>
                 </div>
-            ))}
+            ) : (
+                productInfo.map(el => (
+                    <div key={el.id} className="detailsLayout">
+                        <div className="detailsImageCard">
+                            <img src={el.img} alt="product" className="detailsImage"/>
+                        </div>
+                        <div className="detailsContentCard">
+                            <div className="detailsBadge">Product #{el.id}</div>
+                            <h2 className="detailsTitle">{el.name}</h2>
+                            <p className="detailsDescription">{el.description}</p>
+                            <div className="detailsMetaGrid">
+                                <div className="detailsMetaItem">
+                                    <span className="detailsMetaLabel">Price</span>
+                                    <span className="detailsMetaValue">{el.price}</span>
+                                </div>
+                                <div className="detailsMetaItem">
+                                    <span className="detailsMetaLabel">Image URL</span>
+                                    <span className="detailsMetaValue detailsLinkValue">{el.img}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))
+            )}
         </div>
     )
 }

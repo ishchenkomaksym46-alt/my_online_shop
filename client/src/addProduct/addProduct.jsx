@@ -11,10 +11,14 @@ function AddProduct() {
 
     async function createProduct(e) {
         e.preventDefault();
+        const token = localStorage.getItem('token');
 
         await fetch('http://localhost:5000/createProduct', {
             method: 'POST',
-            headers: { 'Content-type': 'application/json' },
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
             body: JSON.stringify({
                 name,
                 description,
@@ -27,7 +31,7 @@ function AddProduct() {
             if(result.succes === true) {
                 navigate('/');
             } else {
-                setError('Cannot create product! Try again!');
+                setError(result.message || 'Cannot create product! Try again!');
             }
         })
     }

@@ -8,10 +8,14 @@ function DeleteProduct() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        const token = localStorage.getItem('token');
 
         await fetch('http://localhost:5000/deleteProduct', {
             method: 'POST',
-            headers: { 'Content-type': 'application/json' },
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
             body: JSON.stringify({
                 id: id
             })
@@ -21,7 +25,7 @@ function DeleteProduct() {
             if(result.succes === true) {
                 navigate('/');
             } else {
-                setError('No products with this ID');
+                setError(result.message || 'No products with this ID');
             }
         })
     }
