@@ -21,9 +21,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-    origin: process.env.ORIGIN
-}));
+app.use(cors());
 
 app.post('/register', registerController);
 app.post('/login', loginController);
